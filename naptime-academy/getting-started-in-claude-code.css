@@ -110,7 +110,6 @@
 .na .btn{min-height:48px;text-align:center;vertical-align:middle;user-select:none;}
 .na .lead{font-weight:400;}
 .na .toc{display:none!important;}
-.na .card{flex-direction:initial;min-width:0;word-wrap:normal;}
 /* display type pinned: a lesson column is narrower than the viewport vw reads */
 .na h1{font-size:68px;}
 .na h2{font-size:48px;}

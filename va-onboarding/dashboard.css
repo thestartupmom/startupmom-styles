@@ -20,7 +20,7 @@
 .va .hero .kick{color:#f3c9c0;margin-bottom:18px}
 .va .hero h1{font-size:76px;line-height:.98}
 .va .hero h1 em{color:var(--wheat)}
-.va .hero p{font-size:19px;line-height:1.5;color:rgba(248,246,238,.9);margin:18px auto 30px;max-width:460px}
+.va .hero p{font-size:19px;line-height:1.5;color:rgba(248,246,238,.9);margin:18px auto 30px;max-width:none;text-wrap:balance}
 .va .hero .pill{background:var(--cream);color:var(--ink)}
 
 /* the note card, tilted, overlapping the hero edge */
@@ -100,4 +100,9 @@ body:has(.vadash) .main-content-spacer{padding:0!important}
 body:has(.vadash) .col-sm-4:not(:has(#na-root)){display:none!important}
 body:has(.vadash) .col-md-8:has(#na-root){flex:0 0 100%!important;max-width:100%!important;padding:0!important}
 body:has(.vadash) .dashboard-text:has(#na-root){border:0!important;box-shadow:none!important;padding:0!important;background:none!important;border-radius:0!important;margin:0!important}
-.va h1,.va h2{margin-bottom:0}
+#na-root.va h1,#na-root.va h2{font-family:var(--serif)!important;font-weight:400!important;line-height:1!important;letter-spacing:-.015em!important;margin:0!important;text-transform:none!important}
+#na-root.va .hero h1{color:var(--cream)!important;font-size:76px!important;line-height:.98!important}
+#na-root.va .hero h1 em{color:var(--wheat)!important}
+#na-root.va h2{color:var(--ink)!important}#na-root.va h2 em{color:var(--red)!important}
+#na-root.va .hero p{max-width:none!important;margin:18px auto 30px!important;text-wrap:balance}
+@media(max-width:700px){#na-root.va .hero h1{font-size:52px!important}}

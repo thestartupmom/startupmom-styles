@@ -75,8 +75,10 @@
 body:has(.nadash) .dashboard-welcome,body:has(.nadash) .banner-image{display:none!important}
 body:has(.nadash) .main-content-spacer{padding:0!important}
 body:has(.nadash) .col-sm-4:not(:has(#na-root)){display:none!important}
+body:has(.nadash) .main-content-spacer > .row:not(:has(#na-root)),body:has(.nadash) #section-dashboard_tabs{display:none!important}
+body:has(.nadash) .main-content-spacer > .row:has(#na-root){margin-top:0!important}
 body:has(.nadash) .col-md-8:has(#na-root){flex:0 0 100%!important;max-width:100%!important;padding:0!important}
-body:has(.nadash) .dashboard-text:has(#na-root){border:0!important;box-shadow:none!important;padding:0!important;background:none!important;border-radius:0!important}
+body:has(.nadash) .dashboard-text:has(#na-root){border:0!important;box-shadow:none!important;padding:0!important;margin-top:0!important;background:none!important;border-radius:0!important}
 .dz a:hover{text-decoration:none;color:inherit}
 .dz .ask a:hover{color:var(--red)}
 #na-root.dz h1,#na-root.dz h2,#na-root.dz h3{color:var(--ink)}

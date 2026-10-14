@@ -79,5 +79,10 @@ body:has(.nadash) .col-md-8:has(#na-root){flex:0 0 100%!important;max-width:100%
 body:has(.nadash) .dashboard-text:has(#na-root){border:0!important;box-shadow:none!important;padding:0!important;background:none!important;border-radius:0!important}
 .dz a:hover{text-decoration:none;color:inherit}
 .dz .ask a:hover{color:var(--red)}
+#na-root.dz h1,#na-root.dz h2,#na-root.dz h3{color:var(--ink)}
+#na-root.dz .hero h1,#na-root.dz .hero h2{color:var(--cream)}
+#na-root.dz .hero h1 em,#na-root.dz .hero h2 em{color:var(--wheat)}
+#na-root.dz .hero p{color:rgba(248,246,238,.88)}
+#na-root.dz .ph h2 em,#na-root.dz .poster h3 em,#na-root.dz .lt__t h3 em{color:var(--red)}
 .dz p{font-family:var(--sans)}
 .dz .pcard:focus-visible,.dz .prow:focus-visible,.dz .poster:focus-visible{outline:3px solid var(--wheat);outline-offset:3px}

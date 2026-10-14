@@ -1,0 +1,103 @@
+
+@font-face{font-family:'Ugly Dave VA';src:url(https://cdn.jsdelivr.net/gh/thestartupmom/startupmom-styles@d46c0915c7ffe1d17aaf09b0c2ebfc6769c8caa8/fonts/ugly-dave-regular.otf) format('opentype');font-display:swap}
+.va{--red:#bd1b1b;--cream:#f8f6ee;--wheat:#eee3ba;--brass:#9c7c4d;--walnut:#4d3b2d;--ink:#1e1e1e;--white:#fff;--line:#e2dccb;
+ --serif:'Instrument Serif',Georgia,serif;--sans:'Inter',system-ui,sans-serif;--mono:'Cousine',monospace;--hand:'Ugly Dave VA','Ugly Dave',cursive;
+ --ease:cubic-bezier(.2,.7,.2,1);
+ font-family:var(--sans);color:var(--ink);background:var(--cream);-webkit-font-smoothing:antialiased;overflow:hidden;text-align:center}
+.va *{box-sizing:border-box}.va a{color:inherit;text-decoration:none}
+.va h1,.va h2{font-family:var(--serif);font-weight:400;letter-spacing:-.015em;margin:0}
+.va h1 em,.va h2 em{font-style:italic}
+.va .kick{display:block;font-family:var(--mono);font-size:12px;letter-spacing:.22em;text-transform:uppercase}
+.va .hand{font-family:var(--hand);line-height:1}
+.va .pill{display:inline-flex;align-items:center;gap:10px;font-family:var(--mono);font-size:12.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+ border:1px solid #000;border-radius:100px;padding:16px 26px;transition:transform .3s var(--ease)}
+.va .pill:hover{transform:translateY(-2px)}
+.va .pill svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:transform .3s var(--ease)}
+.va .pill:hover svg{transform:translateX(4px)}
+
+/* hero */
+.va .hero{background:var(--red);color:var(--cream);padding:70px 22px 76px}
+.va .hero .kick{color:#f3c9c0;margin-bottom:18px}
+.va .hero h1{font-size:76px;line-height:.98}
+.va .hero h1 em{color:var(--wheat)}
+.va .hero p{font-size:19px;line-height:1.5;color:rgba(248,246,238,.9);margin:18px auto 30px;max-width:460px}
+.va .hero .pill{background:var(--cream);color:var(--ink)}
+
+/* the note card, tilted, overlapping the hero edge */
+.va .note{position:relative;z-index:2;width:min(420px,calc(100% - 44px));margin:-104px auto 0;background:var(--white);border:1px solid var(--ink);
+ border-radius:4px;padding:26px 28px 20px;text-align:left;transform:rotate(-2deg);box-shadow:0 30px 60px -22px rgba(0,0,0,.45);
+ transition:transform .6s var(--ease)}
+.va .note:hover{transform:rotate(-.5deg) translateY(-3px)}
+.va .note__k{display:block;font-family:var(--hand);font-size:28px;color:var(--red);transform:rotate(-3deg);transform-origin:left center;margin-bottom:14px}
+.va .note__t{display:block;font-family:var(--serif);font-size:31px;line-height:1.08;letter-spacing:-.015em;min-height:2.16em;text-wrap:balance;
+ transition:opacity .25s ease,transform .35s var(--ease)}
+.va .note.is-flip .note__t{opacity:0;transform:translateY(8px)}
+.va .note__row{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:16px;padding-top:14px;border-top:1px solid var(--line)}
+.va .note__row span{font-size:13px;color:var(--walnut);opacity:.8}
+.va .note button{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11.5px;font-weight:700;letter-spacing:.1em;
+ text-transform:uppercase;color:var(--ink);background:#fff;border:1px solid var(--ink);border-radius:100px;padding:9px 14px;cursor:pointer;transition:background .25s,color .25s}
+.va .note button:hover{background:var(--red);color:#fff}
+.va .note button svg{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;transition:transform .5s var(--ease)}
+.va .note button:hover svg{transform:rotate(180deg)}
+
+/* ticker */
+.va .tick{background:var(--white);border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);overflow:hidden}
+.va .tick__track{display:flex;width:max-content;padding:16px 0;animation:vaTick 60s linear infinite}
+.va .tick__track span{font-family:var(--mono);font-size:13px;letter-spacing:.1em;text-transform:uppercase;white-space:nowrap;padding-right:36px}
+.va .tick__track span:after{content:'\00b7';margin-left:36px;color:var(--red)}
+@keyframes vaTick{to{transform:translateX(-50%)}}
+
+/* daily to-do + reminders */
+.va .lists{background:var(--white);border-bottom:1px solid var(--ink);padding:72px 22px 76px}
+.va .lists__in{max-width:960px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr}
+.va .col{padding:0 44px}.va .col+.col{border-left:1px solid var(--line)}
+.va .col .kick{color:var(--brass)}
+.va .col h2{font-size:46px;margin:12px 0 26px}.va .col h2 em{color:var(--red)}
+.va .todo,.va .rem{list-style:none;margin:0 auto;padding:0;text-align:left;max-width:380px}
+.va .todo li+li,.va .rem li+li{border-top:1px solid var(--line)}
+.va .todo button{all:unset;box-sizing:border-box;cursor:pointer;display:flex;align-items:center;gap:14px;width:100%;padding:13px 2px;font-size:16px;line-height:1.4}
+.va .todo .box{flex:0 0 24px;height:24px;border-radius:50%;border:1.5px solid var(--ink);display:grid;place-items:center;transition:background .25s,border-color .25s}
+.va .todo .box:after{content:'';width:9px;height:5px;border-left:2px solid #fff;border-bottom:2px solid #fff;transform:rotate(-45deg) translate(1px,-1px);opacity:0}
+.va .todo .is-done .box{background:var(--red);border-color:var(--red)}
+.va .todo .is-done .box:after{opacity:1}
+.va .todo .is-done span:last-child{color:var(--walnut);opacity:.55;text-decoration:line-through;text-decoration-color:var(--red)}
+.va .todo__note{display:block;margin-top:16px;font-size:13px;color:var(--walnut);opacity:.75}
+.va .rem li{position:relative;padding:13px 2px 13px 26px;font-size:16px;line-height:1.45}
+.va .rem li:before{content:'';position:absolute;left:4px;top:21px;width:8px;height:8px;border-radius:50%;background:var(--red)}
+.va .rem b{font-weight:600;color:var(--red)}
+
+/* encore countdown */
+.va .enc{padding:76px 22px 70px}
+.va .enc .kick{color:var(--brass)}
+.va .enc h2{font-size:48px;margin:14px 0 24px}.va .enc h2 em{color:var(--red)}
+.va .clock{display:flex;justify-content:center;gap:28px}
+.va .clock div{min-width:96px}
+.va .clock b{display:block;font-family:var(--serif);font-weight:400;font-size:104px;line-height:.9;color:var(--red);font-variant-numeric:tabular-nums}
+.va .clock span{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--walnut)}
+.va .when{margin:26px 0 0;font-size:15px;color:var(--walnut)}
+.va .when b{font-weight:600;color:var(--ink)}
+
+/* links + help */
+.va .links{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;padding:0 22px}
+.va .links .pill{background:var(--white);color:var(--ink)}
+.va .links .pill:first-child{background:var(--red);color:var(--white)}
+.va .help{padding:56px 22px 72px}
+.va .help .hand{display:block;color:var(--red);font-size:30px;transform:rotate(-2deg)}
+.va .help a{display:inline-block;margin-top:14px;font-family:var(--mono);font-size:15px;color:var(--ink);border-bottom:1px solid var(--red);padding-bottom:3px}
+
+@media(prefers-reduced-motion:reduce){.va .tick__track{animation:none}.va *{transition:none!important}}
+@media(max-width:700px){
+ .va .hero{padding:48px 20px 56px}.va .hero h1{font-size:52px}
+ .va .note{margin-top:-96px;padding:22px 22px 18px}.va .note__t{font-size:27px}
+ .va .enc{padding:56px 20px 52px}.va .enc h2{font-size:38px}
+ .va .clock{gap:12px}.va .clock div{min-width:66px}.va .clock b{font-size:64px}
+ .va .links{flex-direction:column;align-items:center}
+ .va .lists{padding:52px 20px 56px}.va .lists__in{grid-template-columns:1fr;gap:48px}.va .col{padding:0}.va .col+.col{border-left:0}.va .col h2{font-size:38px}
+}
+
+body:has(.vadash) .dashboard-welcome,body:has(.vadash) .banner-image,body:has(.vadash) .dashboard-tabs{display:none!important}
+body:has(.vadash) .main-content-spacer{padding:0!important}
+body:has(.vadash) .col-sm-4:not(:has(#na-root)){display:none!important}
+body:has(.vadash) .col-md-8:has(#na-root){flex:0 0 100%!important;max-width:100%!important;padding:0!important}
+body:has(.vadash) .dashboard-text:has(#na-root){border:0!important;box-shadow:none!important;padding:0!important;background:none!important;border-radius:0!important;margin:0!important}
+.va h1,.va h2{margin-bottom:0}

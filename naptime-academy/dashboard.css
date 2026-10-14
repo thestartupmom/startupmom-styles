@@ -88,3 +88,4 @@ body:has(.nadash) .dashboard-text:has(#na-root){border:0!important;box-shadow:no
 #na-root.dz .ph h2 em,#na-root.dz .poster h3 em,#na-root.dz .lt__t h3 em{color:var(--red)}
 .dz p{font-family:var(--sans)}
 .dz .pcard:focus-visible,.dz .prow:focus-visible,.dz .poster:focus-visible{outline:3px solid var(--wheat);outline-offset:3px}
+

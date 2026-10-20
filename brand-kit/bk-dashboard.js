@@ -4,22 +4,6 @@ if (!DASH.test(location.pathname) && !window.SSK_CANVAS) return;
 var root = document.documentElement;
 root.classList.add('ssk-dash');
 var KEY = 'bk_welcomed_v1';
-var IDEAS = [
-'Warm, bookish, slow.',
-'Bright, loud, a little silly.',
-'Clean, calm, expensive.',
-'Cozy, earthy, handmade.',
-'Bold, red, no apologies.',
-'Soft, dreamy, golden hour.',
-'Crisp, modern, black and white.',
-'Playful, colorful, kid-friendly.',
-'Moody, rich, after dark.',
-'Fresh, green, morning light.',
-'Vintage, warm, a little grainy.',
-'Simple, honest, lots of white space.',
-'Sunny, beachy, easy.',
-'Sharp, smart, all business.'
-];
 var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
 var seen = '1';
 try { seen = localStorage.getItem(KEY); } catch (e) {}
@@ -60,20 +44,11 @@ nx.innerHTML = next ? (started ? 'Next up: ' : 'Start with ') + '<b>' + esc(next
 }
 if (btn && mb && btn.parentNode !== mb) mb.appendChild(btn);
 if (!$('.ssk-idea', w)){
-var day = Math.floor(Date.now() / 864e5), n = day % IDEAS.length;
-var card = document.createElement('aside'); card.className = 'ssk-idea'; card.setAttribute('aria-label', 'Three words to try');
-card.innerHTML = '<span class="ssk-idea__k">three words to try</span>' +
-'<span class="ssk-idea__t" aria-live="polite">' + esc(IDEAS[n]) + '</span>' +
-'<div class="ssk-idea__row"><span>Say make me a brand.</span><button type="button">' +
-'<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
-'<path d="M13.5 8a5.5 5.5 0 1 1-1.6-3.9"/><path d="M13.5 2.5v3h-3"/></svg>Another</button></div>';
-var txt = $('.ssk-idea__t', card);
-$('button', card).addEventListener('click', function(){
-n = (n + 1 + Math.floor(Math.random() * (IDEAS.length - 1))) % IDEAS.length;
-if (reduce){ txt.textContent = IDEAS[n]; return; }
-card.classList.add('is-flip');
-setTimeout(function(){ txt.textContent = IDEAS[n]; card.classList.remove('is-flip'); }, 220);
-});
+var card = document.createElement('aside'); card.className = 'ssk-idea'; card.setAttribute('aria-label', 'Launch bonus');
+card.innerHTML = '<span class="ssk-idea__k">launch bonus!</span>' +
+'<span class="ssk-idea__t">A new way to make everything look like you.</span>' +
+'<span class="ssk-idea__s">Your reels, carousels, stories and covers, all in your look. Just tell Claude.</span>' +
+'<div class="ssk-idea__row"><span>Free with your engine.</span></div>';
 w.querySelector('.media').appendChild(card);
 }
 }

@@ -54,11 +54,15 @@ w.querySelector('.media').appendChild(card);
 }
 function build(){
 var banner = $('.banner-image');
-if (banner && !$('.ssk-ticker')){
-var tk = document.createElement('div'); tk.className = 'ssk-ticker'; tk.setAttribute('aria-hidden', 'true');
-var one = '<span>Pick your look</span><span>Make it yours</span><span>Your handbook</span><span>Your first reel</span>';
-tk.innerHTML = '<div class="ssk-ticker__track">' + one + one + one + one + '</div>';
-banner.parentNode.insertBefore(tk, banner.nextSibling);
+if (banner && !$('.ssk-fuel')){
+var fu = document.createElement('section'); fu.className = 'ssk-fuel';
+fu.setAttribute('aria-label', 'AI is not generic because your ideas aren\u2019t. Your ideas fuel this engine.');
+var chips = '<span class="ssk-chip ssk-chip--warm"><q>Warm, bookish, slow.</q><span class="ssk-chip__dots"><s style="background:#efe4cf"></s><s style="background:#4d3b2d"></s><s style="background:#bd1b1b"></s></span></span><span class="ssk-chip ssk-chip--loud"><q>Bright, loud, a little silly.</q><span class="ssk-chip__dots"><s style="background:#ffd84d"></s><s style="background:#d6246e"></s><s style="background:#2bb3e6"></s></span></span><span class="ssk-chip ssk-chip--mono"><q>Crisp, modern, black and white.</q><span class="ssk-chip__dots"><s style="background:#ffffff"></s><s style="background:#111111"></s><s style="background:#9b9b9b"></s></span></span><span class="ssk-chip ssk-chip--earthy"><q>Cozy, earthy, handmade.</q><span class="ssk-chip__dots"><s style="background:#dfe3cf"></s><s style="background:#3e4a2c"></s><s style="background:#b5763d"></s></span></span><span class="ssk-chip ssk-chip--bold"><q>Bold, red, no apologies.</q><span class="ssk-chip__dots"><s style="background:#bd1b1b"></s><s style="background:#f8f6ee"></s><s style="background:#1e1e1e"></s></span></span><span class="ssk-chip ssk-chip--dreamy"><q>Soft, dreamy, golden hour.</q><span class="ssk-chip__dots"><s style="background:#fde2cf"></s><s style="background:#f6c9d4"></s><s style="background:#e3a857"></s></span></span><span class="ssk-chip ssk-chip--dark"><q>Moody, rich, after dark.</q><span class="ssk-chip__dots"><s style="background:#2a1f2e"></s><s style="background:#e7c98a"></s><s style="background:#7a2e3a"></s></span></span><span class="ssk-chip ssk-chip--fresh"><q>Fresh, green, morning light.</q><span class="ssk-chip__dots"><s style="background:#e4f4ec"></s><s style="background:#1f6b4a"></s><s style="background:#f2e27a"></s></span></span><span class="ssk-chip ssk-chip--vintage"><q>Vintage, warm, a little grainy.</q><span class="ssk-chip__dots"><s style="background:#e9d3b0"></s><s style="background:#6b3a1f"></s><s style="background:#a8502c"></s></span></span><span class="ssk-chip ssk-chip--sunny"><q>Sunny, beachy, easy.</q><span class="ssk-chip__dots"><s style="background:#cfe9f6"></s><s style="background:#1d5b7a"></s><s style="background:#f4d9a0"></s></span></span><span class="ssk-chip ssk-chip--simple"><q>Simple, honest, lots of white space.</q><span class="ssk-chip__dots"><s style="background:#ffffff"></s><s style="background:#444444"></s><s style="background:#e8e8e8"></s></span></span><span class="ssk-chip ssk-chip--sharp"><q>Sharp, smart, all business.</q><span class="ssk-chip__dots"><s style="background:#1f2a44"></s><s style="background:#ffffff"></s><s style="background:#c9a227"></s></span></span>';
+fu.innerHTML = '<div class="ssk-fuel__say"><p class="ssk-fuel__line">AI is not <span class="ssk-fuel__gen">generic</span></p>' +
+'<span class="ssk-fuel__because">because your ideas aren\u2019t.<svg viewBox="0 0 300 12" preserveAspectRatio="none" aria-hidden="true"><path d="M2 8 C 60 2, 120 11, 180 6 S 270 3, 298 7"/></svg></span></div>' +
+'<div class="ssk-fuel__run" aria-hidden="true"><span class="ssk-fuel__lab"><i><b>\u2190</b><b>\u2190</b><b>\u2190</b></i>Your ideas fuel this engine</span>' +
+'<div class="ssk-fuel__lane"><div class="ssk-fuel__track">' + chips + chips + '</div></div></div>';
+banner.parentNode.insertBefore(fu, banner.nextSibling);
 }
 if (banner && !$('.ssk-desk')){
 var desk = document.createElement('div'); desk.className = 'ssk-desk';

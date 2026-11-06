@@ -19,7 +19,10 @@
    lesson href out of #section-product_body. */
 html.ssk-dash .banner-image,
 html.ssk-dash #section-product_body,
-html.ssk-dash #section-product_sidebar{display:none!important;}
+html.ssk-dash #section-product_sidebar,
+html.ssk-dash .main-sidebar{display:none!important;}
+/* content column fills the row once the native nav rail is gone (full-bleed hero) */
+html.ssk-dash .main-content{max-width:100%!important;flex:1 1 100%!important;}
 
 /* ---- tokens live on the injected shell ---- */
 .ssk-shell{

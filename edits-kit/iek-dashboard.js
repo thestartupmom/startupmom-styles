@@ -5,7 +5,7 @@
    block: red hero + tilted bonus card, a do-this-first gate, A NOTE FROM ME
    letter, a help card, and the engine-owner community promo. Only the member's
    first name and the first lesson's href are read from the native DOM. */
-var DASH = /^\/products\/instagram-edits-kit\/?$/;
+var DASH = /^\/products\/instagram-edits-kit(-add-on)?\/?$/;
 if (!DASH.test(location.pathname) && !window.IEK_CANVAS) return;
 document.documentElement.classList.add('ssk-dash');
 

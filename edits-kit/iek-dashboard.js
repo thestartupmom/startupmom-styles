@@ -82,6 +82,16 @@ function helpHTML(){
     '<details><summary>Still stuck after that?</summary><p>Send that report to <a href="mailto:it@thestartupmom.com">it@thestartupmom.com</a> and I’ll get back to you as quickly as I can.</p></details></div>' +
   '</div>';
 }
+function gateHTML(){
+  return '<section class="ssk-gate" id="ssk-start">' +
+    '<span class="ssk-gate__mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v11"/><path d="M8 11l4 4 4-4"/><path d="M5 20h14"/></svg></span>' +
+    '<div class="ssk-gate__body">' +
+      '<p class="ssk-gate__ey">Before you connect</p>' +
+      '<h3 class="ssk-gate__h">Install your engine first.</h3>' +
+      '<p class="ssk-gate__p">Your engine does the work, so make sure it is installed and you have finished <b>module 1 of your setup</b> before you connect to Edits. Install the engine, then come back here and hook it up.</p>' +
+    '</div>' +
+  '</section>';
+}
 function build(){
   var banner = $('.banner-image');
   if (banner && !$('.ssk-desk')){
@@ -90,6 +100,24 @@ function build(){
     banner.parentNode.insertBefore(desk, banner.nextSibling);
   }
   var body = $('#section-product_body');
+  /* The native product dashboard ships a plain welcome paragraph as the first
+     body block. Meg wants the old "Install your engine first" gate in that
+     spot, so hide that one welcome block (never the module outline) and put
+     the gate card first. */
+  if (body && !$('.ssk-gate', body)){
+    var nat = null;
+    [].slice.call(body.children).forEach(function(c){
+      if (nat) return;
+      if (c.classList.contains('ssk-bare')) return;
+      if (c.querySelector && c.querySelector('.ssk-letter,.ssk-help,.ssk-gate')) return;
+      if (/dashboard-img|dashboard-video/.test(c.className || '')) return;
+      nat = c;
+    });
+    if (nat) nat.style.display = 'none';
+    var gw = document.createElement('div'); gw.className = 'dashboard-text ssk-bare';
+    gw.innerHTML = gateHTML();
+    body.insertBefore(gw, body.firstChild);
+  }
   if (body && !$('.ssk-letter', body)){
     var lw = document.createElement('div'); lw.className = 'dashboard-text ssk-bare';
     lw.innerHTML = letterHTML();

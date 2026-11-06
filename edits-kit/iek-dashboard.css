@@ -22,7 +22,7 @@
 /* ---- reveal curtain (first visit only) ---- */
 html.iek-veil #section-product_body{opacity:0;}
 #iek-reveal{position:fixed;inset:0;z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;background:var(--red);color:#fff;text-align:center;padding:24px;animation:iekFade .5s var(--ease) 2.7s forwards;}
-#iek-reveal .rv-title{font-family:var(--serif);font-size:clamp(40px,8vw,72px);line-height:1;margin:0;}
+#iek-reveal .rv-title{font-family:var(--serif);font-size:clamp(40px,8vw,72px);line-height:1;margin:0;color:#fff!important;}
 #iek-reveal .rv-title em{font-style:italic;color:var(--wheat);}
 #iek-reveal .rv-sub{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;margin:6px 0 0;color:rgba(255,255,255,.86);}
 #iek-reveal .rv-skip{position:absolute;bottom:26px;background:none;border:1px solid rgba(255,255,255,.5);color:#fff;border-radius:100px;padding:8px 18px;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;}
@@ -52,7 +52,7 @@ html.iek-veil #section-product_body{opacity:0;}
 .iek-dash .iek-desk svg{flex:none;width:20px;height:20px;margin-top:1px;stroke:var(--red);stroke-width:1.8;fill:none;}
 
 /* ---- the three-tile strip: install -> connect -> create ---- */
-.iek-dash .iek-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:26px 0 8px;}
+.iek-dash .iek-steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:26px 0 8px;padding:0 clamp(24px,5vw,56px);box-sizing:border-box;width:100%;max-width:100%;}
 .iek-dash .iek-tile{display:flex;flex-direction:column;gap:10px;text-decoration:none;color:var(--ink);background:#fff;border:1px solid var(--ink);border-radius:16px;padding:20px 18px 18px;min-height:150px;transition:transform .2s var(--ease),box-shadow .2s var(--ease);}
 .iek-dash .iek-tile:hover{transform:translateY(-3px);box-shadow:0 14px 30px -18px rgba(30,30,30,.5);}
 .iek-dash .iek-tile__top{display:flex;align-items:center;justify-content:space-between;}

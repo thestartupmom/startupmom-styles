@@ -1,102 +1,138 @@
 (function(){
-/* Instagram Edits Kit course dashboard (v2, Brand Kit vibe). Runs only on the
-   product dashboard (or in the canvas preview where window.IEK_CANVAS is set).
-   Hides Kajabi's native dashboard and injects one self-contained .ssk-shell
-   block: red hero + tilted bonus card, a do-this-first gate, A NOTE FROM ME
-   letter, a help card, and the engine-owner community promo. Only the member's
-   first name and the first lesson's href are read from the native DOM. */
+/* Instagram Edits Kit course dashboard. Duplicates the Brand Kit add-on skin:
+   it KEEPS Kajabi's native dashboard (left module outline, center body, right
+   rail) fully visible and only styles it, then augments with the hero bonus
+   card, the A NOTE FROM ME letter (center body), and the help + community
+   panels (right rail). Runs only on the IEK product dashboard, or in the
+   canvas preview where window.IEK_CANVAS is set. It never hides the native
+   dashboard, so the modules always render. */
 var DASH = /^\/products\/instagram-edits-kit(-add-on)?\/?$/;
 if (!DASH.test(location.pathname) && !window.IEK_CANVAS) return;
-document.documentElement.classList.add('ssk-dash');
-
+var root = document.documentElement;
+root.classList.add('ssk-dash');
+var KEY = 'iek_welcomed_v1';
+var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+var seen = '1';
+try { seen = localStorage.getItem(KEY); } catch (e) {}
+var reveal = !seen && !reduce;
+if (reveal) root.classList.add('ssk-veil');
 function ready(fn){ document.readyState !== 'loading' ? fn() : document.addEventListener('DOMContentLoaded', fn); }
 function $(s, c){ return (c || document).querySelector(s); }
 function $$(s, c){ return [].slice.call((c || document).querySelectorAll(s)); }
 function esc(s){ return String(s).replace(/[&<>"]/g, function(m){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]; }); }
 
-function firstName(){
-  var t = $('.dashboard-welcome-title'); if (!t) return '';
-  var c = t.cloneNode(true); $$('span', c).forEach(function(s){ s.remove(); });
-  var full = (c.textContent || '').trim();
-  return /@/.test(full) ? '' : (full.split(/\s+/)[0] || '');
-}
-function firstLessonHref(){
-  var a = $('.product-outline-post'); var h = a ? (a.getAttribute('href') || '') : '';
-  return h || '#ssk-start';
-}
-
 var ICON = 'https://cdn.jsdelivr.net/gh/thestartupmom/naptime-academy-assets@e56cb71da1af99daf2ab8197f141b70f058d0e9a/course-lesson/edits-kit/edits-icon.webp';
 var PORTRAIT = 'https://kajabi-storefronts-production.s3.amazonaws.com/file-uploads/sites/2148860783/images/dbb230-80-ce08-bf4c-b6dc04d4eda5_Hi_I_m_Meg_portrait_4_5.jpg';
+var CLUB_GIF = 'https://kajabi-storefronts-production.kajabi-cdn.com/kajabi-storefronts-production/file-uploads/sites/2148860783/images/badec6-16-b45f-c2fb-634fe160010_community-dashboard-banner.gif';
+var CLUB_HREF = 'https://www.thestartupmom.com/community-join';
 
-function markup(hello, l1){
-  return '' +
-  '<div class="ssk-hero">' +
-    '<div class="ssk-hero__media">' +
-      '<div class="ssk-hero__body">' +
-        '<h1 class="ssk-hero__title">' + hello + '</h1>' +
-        '<span class="ssk-hero__sub">Your free add on. The engine you already own can now cut your reels right inside the Edits desktop app, so you edit by talking, right where you post.</span>' +
-        '<a class="ssk-hero__btn" href="' + esc(l1) + '">Start lesson 1</a>' +
-      '</div>' +
-      '<aside class="ssk-idea">' +
-        '<div class="ssk-edits">' +
-          '<span class="ssk-edits__lbl" aria-hidden="true">it’s here</span>' +
-          '<svg class="ssk-edits__arrow" aria-hidden="true" viewBox="0 0 30 36"><path d="M15 3 C 11 13, 19 20, 15 30 M15 30 l-6 -7 M15 30 l6 -7"/></svg>' +
-          '<img class="ssk-edits__ic" src="' + ICON + '" alt="Edits app" width="88" height="88">' +
-        '</div>' +
-        '<span class="ssk-idea__t">Now works with the <em>Edits</em> desktop app.</span>' +
-        '<div class="ssk-idea__row"><span>Free with your engine</span></div>' +
-      '</aside>' +
-    '</div>' +
-  '</div>' +
-  '<div class="ssk-main">' +
-    '<div class="ssk-row">' +
-      '<div class="ssk-bodycol">' +
-        '<section class="ssk-gate" id="ssk-start">' +
-          '<span class="ssk-gate__mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v11"/><path d="M8 11l4 4 4-4"/><path d="M5 20h14"/></svg></span>' +
-          '<div class="ssk-gate__body">' +
-            '<p class="ssk-gate__ey">Before you connect</p>' +
-            '<h3 class="ssk-gate__h">Install your engine first.</h3>' +
-            '<p class="ssk-gate__p">Your engine does the work, so make sure it is installed and you have finished <b>module 1 of your setup</b> before you connect to Edits. Install the engine, then come back here and hook it up.</p>' +
-          '</div>' +
-        '</section>' +
-        '<div class="ssk-letter">' +
-          '<div class="ssk-letter__from"><img src="' + PORTRAIT + '" alt="" width="46" height="46"><span>A note from me</span></div>' +
-          '<h2>Your whole system, now inside <em>Edits.</em></h2>' +
-          '<p><b>I told you I’d give you every upgrade free, forever. I meant it.</b> This is one of them. The engine you already own can now hand your finished reel straight to the Edits desktop app, so you edit by talking, right where you post.</p>' +
-          '<p><b>Start with Start here.</b> It is the short version, about two minutes. Edits is not a new tool to learn. It is one more place your engine delivers to. Same system, same you, one new door.</p>' +
-          '<p>When your first reel comes out of Edits, tag it <b>#startupmomedit</b>. I want to see it.</p>' +
-          '<span class="ssk-letter__sig">Meg</span>' +
-        '</div>' +
-      '</div>' +
-      '<div class="ssk-rail">' +
-        '<div class="ssk-help">' +
-          '<span class="ssk-help__mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9.1 9a3 3 0 1 1 4.6 2.5c-.9.6-1.7 1.2-1.7 2.5"/><path d="M12 17h.01"/><circle cx="12" cy="12" r="9.5"/></svg></span>' +
-          '<div><h4>Stuck anywhere?</h4><p>Edits lives on your computer, so open this on your laptop when you connect it.</p><p>Email <a href="mailto:it@thestartupmom.com">it@thestartupmom.com</a> and a real person helps you get connected.</p></div>' +
-        '</div>' +
-        '<aside class="ssk-club">' +
-          '<span class="ssk-club__k">Engine owner price</span>' +
-          '<h3 class="ssk-club__h">Come see how I build it, <em>with Claude.</em></h3>' +
-          '<p class="ssk-club__p">Inside the community: a live call with me every month, my real workflow, and Naptime Academy.</p>' +
-          '<div class="ssk-club__price"><b>$37</b><span>a month, not $47</span></div>' +
-          '<a class="ssk-club__go" href="https://www.thestartupmom.com/offers/GeFPUsgV/checkout?coupon_code=COMMUNITY37">Join the community</a>' +
-        '</aside>' +
-      '</div>' +
-    '</div>' +
+function lessons(){
+  return $$('.product-outline-post').map(function(a){
+    var m = (a.getAttribute('href') || '').match(/\/posts\/(\d+)/), ic = $('.progress-icon', a);
+    return {post: m ? m[1] : '', done: !!(ic && ic.classList.contains('progress-icon-100')),
+      title: (($('.media-body', a) || a).textContent || '').trim()};
+  }).filter(function(l){ return l.post; });
+}
+function firstName(){
+  var t = $('.dashboard-welcome-title'); if (!t) return '';
+  var full = t.getAttribute('data-ssk-name');
+  if (full == null){
+    var c = t.cloneNode(true); $$('span', c).forEach(function(s){ s.remove(); });
+    full = (c.textContent || '').trim(); t.setAttribute('data-ssk-name', full);
+  }
+  return /@/.test(full) ? '' : (full.split(/\s+/)[0] || '');
+}
+function hero(){
+  var w = $('.dashboard-welcome'); if (!w) return;
+  var list = lessons(), started = list.some(function(l){ return l.done; });
+  var t = $('.dashboard-welcome-title', w), name = firstName();
+  if (t) t.innerHTML = (started ? 'Welcome back' : 'Welcome') + (name ? ', <em>' + esc(name) + '.</em>' : ' <em>in.</em>');
+  var sub = $('.dashboard-welcome-subtitle', w), btn = $('.dashboard-welcome-btn', w), mb = $('.media-body', w);
+  if (sub){
+    var nx = $('.ssk-next', sub);
+    if (!nx){ nx = document.createElement('span'); nx.className = 'ssk-next'; sub.appendChild(nx); }
+    var href = btn ? (btn.getAttribute('href') || '') : '', next = null;
+    list.forEach(function(l){ if (!next && href.indexOf('/posts/' + l.post) > -1) next = l; });
+    nx.innerHTML = next ? (started ? 'Next up: ' : 'Start with ') + '<b>' + esc(next.title) + '</b>' : '';
+  }
+  if (btn && mb && btn.parentNode !== mb) mb.appendChild(btn);
+  if (!$('.ssk-idea', w)){
+    var card = document.createElement('aside'); card.className = 'ssk-idea'; card.setAttribute('aria-label', 'Your free add on');
+    card.innerHTML = '<span class="ssk-idea__k">it’s here!</span>' +
+      '<span class="ssk-idea__t">Your engine now cuts reels inside <em>Edits.</em></span>' +
+      '<span class="ssk-idea__s">Tell Claude what you want. Get a finished cut in the Edits desktop app, right where you post.</span>' +
+      '<div class="ssk-idea__row"><span>Free with your engine.</span></div>';
+    var m = w.querySelector('.media'); if (m) m.appendChild(card);
+  }
+}
+function letterHTML(){
+  return '<div class="ssk-letter">' +
+    '<div class="ssk-letter__from"><img src="' + PORTRAIT + '" alt="" width="46" height="46"><span>A note from me</span></div>' +
+    '<h2>Your whole system, now inside <em>Edits.</em></h2>' +
+    '<p><b>I told you I’d give you every upgrade free, forever. I meant it.</b> This is one of them. The engine you already own can now hand your finished reel straight to the Edits desktop app, so you edit by talking, right where you post.</p>' +
+    '<p><b>Start with the first lesson.</b> It is short, about two minutes. Edits is not a new tool to learn. It is one more place your engine delivers to. Same system, same you, one new door.</p>' +
+    '<p>When your first reel comes out of Edits, tag it <b>#startupmomedit</b>. I want to see it.</p>' +
+    '<span class="ssk-letter__sig">Meg</span>' +
   '</div>';
 }
-
-function build(){
-  if ($('.ssk-shell')) return;
-  var name = firstName();
-  var hello = name ? 'Welcome, <em>' + esc(name) + '.</em>' : 'Welcome <em>in.</em>';
-  var shell = document.createElement('div');
-  shell.className = 'ssk-shell';
-  shell.innerHTML = markup(hello, firstLessonHref());
-  var anchor = $('.banner-image') || $('#section-product_body') || document.body;
-  if (anchor === document.body) anchor.insertBefore(shell, anchor.firstChild);
-  else anchor.parentNode.insertBefore(shell, anchor);
+function helpHTML(){
+  return '<div class="ssk-help">' +
+    '<span class="ssk-help__mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .8c.9 7 3.4 10 10.4 11.2-7 1.2-9.5 4.2-10.4 11.2-.9-7-3.4-10-10.4-11.2C8.6 10.8 11.1 7.8 12 .8Z"/></svg></span>' +
+    '<div><p><b>Something not working?</b> Tell Claude <span class="k">report a problem</span>. It tries to fix it first, and if it can’t, it writes you a short report.</p>' +
+    '<details><summary>Still stuck after that?</summary><p>Send that report to <a href="mailto:it@thestartupmom.com">it@thestartupmom.com</a> and I’ll get back to you as quickly as I can.</p></details></div>' +
+  '</div>';
 }
-
-ready(build);
-window.IEK = { rebuild: build };
+function build(){
+  var banner = $('.banner-image');
+  if (banner && !$('.ssk-desk')){
+    var desk = document.createElement('div'); desk.className = 'ssk-desk';
+    desk.innerHTML = '<b>Setup happens on your computer.</b> Save this for your laptop.';
+    banner.parentNode.insertBefore(desk, banner.nextSibling);
+  }
+  var body = $('#section-product_body');
+  if (body && !$('.ssk-letter', body)){
+    var lw = document.createElement('div'); lw.className = 'dashboard-text ssk-bare';
+    lw.innerHTML = letterHTML();
+    body.appendChild(lw);
+  }
+  var rail = $('#section-product_sidebar');
+  if (rail && !$('.ssk-help', rail)){
+    var hw = document.createElement('div'); hw.className = 'dashboard-text ssk-bare';
+    hw.innerHTML = helpHTML();
+    rail.appendChild(hw);
+    var club = document.createElement('div'); club.className = 'dashboard-img';
+    club.innerHTML = '<a href="' + CLUB_HREF + '"><img class="img-fluid" src="' + CLUB_GIF + '" alt="Join The Startup Mom Community. Bonus: Naptime Academy inside."></a>';
+    rail.appendChild(club);
+  }
+  $$('.dashboard-text').forEach(function(b){ if ($('.ssk-letter, .ssk-help', b)) b.classList.add('ssk-bare'); });
+}
+function align(){
+  var rail = $('#section-product_sidebar'), vid = $('#section-product_body .dashboard-video, #section-product_body .dashboard-img');
+  if (!rail || !vid) return;
+  rail.style.marginTop = '';
+  if (window.innerWidth < 768) return;
+  var d = vid.getBoundingClientRect().top - rail.getBoundingClientRect().top;
+  if (d > 0) rail.style.marginTop = Math.round(d) + 'px';
+}
+function playReveal(){
+  try { localStorage.setItem(KEY, '1'); } catch (e) {}
+  var name = firstName();
+  var o = document.createElement('div');
+  o.id = 'ssk-reveal'; o.setAttribute('role', 'presentation');
+  o.innerHTML = '<h2 class="rv-title">You’re in' + (name ? ', <em>' + esc(name) + '.</em>' : '<em>.</em>') + '</h2>' +
+    '<p class="rv-sub">The Edits Kit is yours.</p><button type="button" class="rv-skip">Skip</button>';
+  document.body.appendChild(o);
+  root.classList.remove('ssk-veil');
+  var gone = false;
+  function finish(){ if (gone) return; gone = true; clearTimeout(t); if (o.parentNode) o.parentNode.removeChild(o); }
+  var t = setTimeout(finish, 3300);
+  $('.rv-skip', o).addEventListener('click', finish);
+}
+ready(function(){
+  build(); hero(); align();
+  window.addEventListener('resize', align);
+  window.addEventListener('load', align);
+  if (reveal) playReveal(); else root.classList.remove('ssk-veil');
+});
+window.IEK = { update: function(){ hero(); align(); }, replay: function(){ try { localStorage.removeItem(KEY); } catch (e) {} playReveal(); }, rebuild: build };
 })();

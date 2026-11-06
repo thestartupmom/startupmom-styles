@@ -1,0 +1,92 @@
+/* ===== Instagram Edits Kit — course dashboard skin =====
+   Injected via the product dashboard theme embedded_scripts. Keyed on Kajabi's
+   standard dashboard classes; activated by the .iek-dash root class the JS adds
+   only on /products/instagram-edits-kit. Lean, value-forward: red hero, a
+   three-tile install -> connect -> create strip, a short letter, a help card.
+   Fonts load from the site theme (Instrument Serif / Clash Display / Cousine /
+   Inter); Ugly Dave via the hosted woff2 face below. */
+@font-face{font-family:'Ugly Dave';font-style:normal;font-weight:400;font-display:swap;src:url('https://cdn.jsdelivr.net/gh/thestartupmom/startupmom-styles@a6e5d3a8fe931033ca1edfea1cd3e2103a739224/fonts/ugly-dave-regular.otf') format('opentype');}
+
+.iek-dash{
+  --red:#bd1b1b; --sage:#395848; --brass:#9c7c4d;
+  --cream:#f8f6ee; --wheat:#eee3ba; --ink:#1e1e1e; --walnut:#4d3b2d;
+  --hairline:#1e1e1e; --muted:rgba(30,30,30,.66);
+  --serif:'Instrument Serif',Georgia,serif;
+  --display:'Clash Display','Inter',sans-serif;
+  --sans:'Inter',system-ui,sans-serif;
+  --mono:'Cousine',monospace;
+  --hand:'Ugly Dave','Gochi Hand',cursive;
+  --ease:cubic-bezier(.22,.61,.36,1);
+}
+
+/* ---- reveal curtain (first visit only) ---- */
+html.iek-veil #section-product_body{opacity:0;}
+#iek-reveal{position:fixed;inset:0;z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;background:var(--red);color:#fff;text-align:center;padding:24px;animation:iekFade .5s var(--ease) 2.7s forwards;}
+#iek-reveal .rv-title{font-family:var(--serif);font-size:clamp(40px,8vw,72px);line-height:1;margin:0;}
+#iek-reveal .rv-title em{font-style:italic;color:var(--wheat);}
+#iek-reveal .rv-sub{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;margin:6px 0 0;color:rgba(255,255,255,.86);}
+#iek-reveal .rv-skip{position:absolute;bottom:26px;background:none;border:1px solid rgba(255,255,255,.5);color:#fff;border-radius:100px;padding:8px 18px;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;}
+@keyframes iekFade{to{opacity:0;visibility:hidden;}}
+
+/* ---- banner -> solid red ---- */
+.iek-dash .banner-image{background:var(--red)!important;}
+.iek-dash .banner-image img{opacity:0;}
+
+/* ---- welcome band (red) ---- */
+.iek-dash .dashboard-welcome{background:var(--red);color:#fff;border-radius:18px;padding:clamp(28px,5vw,52px) clamp(24px,5vw,56px);overflow:hidden;}
+.iek-dash .dashboard-welcome .media{display:flex;flex-wrap:wrap;align-items:center;gap:22px;}
+.iek-dash .dashboard-welcome .media-body{flex:1 1 300px;min-width:0;}
+.iek-dash .dashboard-welcome-title{font-family:var(--serif);font-weight:400;font-size:clamp(34px,5.4vw,56px);line-height:1.02;color:#fff;margin:0;}
+.iek-dash .dashboard-welcome-title em{font-style:italic;color:var(--wheat);}
+.iek-dash .dashboard-welcome-subtitle{font-family:var(--sans);font-size:16px;line-height:1.55;color:rgba(255,255,255,.9);margin:12px 0 0;max-width:46ch;}
+.iek-dash .ssk-next{display:block;margin-top:10px;font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--wheat);}
+.iek-dash .ssk-next b{font-weight:400;color:#fff;}
+/* cream outlined button = the door */
+.iek-dash .dashboard-welcome-btn{display:inline-flex;align-items:center;gap:8px;margin-top:20px;background:var(--cream);color:var(--ink);border:1px solid var(--ink);border-radius:100px;padding:13px 24px;font-family:var(--mono);font-size:13px;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;transition:transform .2s var(--ease);}
+.iek-dash .dashboard-welcome-btn::after{content:"\2192";}
+.iek-dash .dashboard-welcome-btn:hover{transform:translateX(3px);}
+
+/* ---- desk note: setup happens on a computer ---- */
+.iek-dash .iek-desk{display:flex;gap:10px;align-items:flex-start;margin:18px 0 0;padding:14px 16px;background:var(--wheat);border:1px solid var(--ink);border-radius:12px;font-family:var(--sans);font-size:14.5px;line-height:1.5;color:var(--ink);}
+.iek-dash .iek-desk b{font-weight:600;}
+.iek-dash .iek-desk svg{flex:none;width:20px;height:20px;margin-top:1px;stroke:var(--red);stroke-width:1.8;fill:none;}
+
+/* ---- the three-tile strip: install -> connect -> create ---- */
+.iek-dash .iek-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:26px 0 8px;}
+.iek-dash .iek-tile{display:flex;flex-direction:column;gap:10px;text-decoration:none;color:var(--ink);background:#fff;border:1px solid var(--ink);border-radius:16px;padding:20px 18px 18px;min-height:150px;transition:transform .2s var(--ease),box-shadow .2s var(--ease);}
+.iek-dash .iek-tile:hover{transform:translateY(-3px);box-shadow:0 14px 30px -18px rgba(30,30,30,.5);}
+.iek-dash .iek-tile__top{display:flex;align-items:center;justify-content:space-between;}
+.iek-dash .iek-tile__ic{width:38px;height:38px;border-radius:10px;background:var(--cream);border:1px solid var(--ink);display:flex;align-items:center;justify-content:center;}
+.iek-dash .iek-tile__ic svg{width:20px;height:20px;stroke:var(--red);stroke-width:1.7;fill:none;}
+.iek-dash .iek-tile__tag{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);}
+.iek-dash .iek-tile__tag.is-done{color:var(--sage);}
+.iek-dash .iek-tile__name{font-family:var(--serif);font-size:23px;line-height:1.08;margin-top:auto;}
+.iek-dash .iek-tile__go{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--red);}
+.iek-dash .iek-tile__go::after{content:" \2192";}
+
+/* ---- letter: short, calm ---- */
+.iek-dash .iek-bare{background:var(--cream);border:1px solid #e7e3d9;border-radius:16px;padding:clamp(22px,4vw,30px);margin-top:22px;}
+.iek-dash .iek-bare p{font-family:var(--sans);font-size:16.5px;line-height:1.65;color:var(--ink);margin:0 0 12px;}
+.iek-dash .iek-bare p:last-child{margin-bottom:0;}
+.iek-dash .iek-bare .sig{font-family:var(--hand);color:var(--red);font-size:26px;line-height:1;margin-top:6px;}
+
+/* ---- sidebar help card ---- */
+.iek-dash .iek-help{background:var(--wheat);border:1px solid var(--ink);border-radius:14px;padding:18px 20px;}
+.iek-dash .iek-help h4{font-family:var(--display);font-weight:600;font-size:13px;letter-spacing:.1em;text-transform:uppercase;margin:0 0 6px;color:var(--ink);}
+.iek-dash .iek-help p{font-family:var(--sans);font-size:14.5px;line-height:1.55;color:var(--ink);margin:0;}
+.iek-dash .iek-help a{color:var(--red);font-weight:600;text-decoration:none;}
+
+/* ---- framed consumption images (lesson cards further down) ---- */
+.iek-dash #section-product_body .dashboard-img,
+.iek-dash .dashboard-video{border:1px solid var(--ink);border-radius:16px;overflow:hidden;box-shadow:0 18px 40px -26px rgba(30,30,30,.5);}
+
+/* ---- hide leftover PYP/placeholder chrome ---- */
+.iek-dash .iek-bare.hidden-letter{display:none;}
+
+@media(max-width:767px){
+  .iek-dash .iek-steps{grid-template-columns:1fr;}
+  .iek-dash .iek-tile{min-height:0;flex-direction:row;align-items:center;gap:14px;padding:16px;}
+  .iek-dash .iek-tile__top{flex:none;}
+  .iek-dash .iek-tile__name{margin-top:0;font-size:20px;}
+  .iek-dash .iek-tile__go{display:none;}
+}

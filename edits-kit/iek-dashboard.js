@@ -24,7 +24,7 @@ function esc(s){ return String(s).replace(/[&<>"]/g, function(m){ return {'&':'&
 var ICON = 'https://cdn.jsdelivr.net/gh/thestartupmom/naptime-academy-assets@e56cb71da1af99daf2ab8197f141b70f058d0e9a/course-lesson/edits-kit/edits-icon.webp';
 var PORTRAIT = 'https://kajabi-storefronts-production.s3.amazonaws.com/file-uploads/sites/2148860783/images/dbb230-80-ce08-bf4c-b6dc04d4eda5_Hi_I_m_Meg_portrait_4_5.jpg';
 var CLUB_GIF = 'https://kajabi-storefronts-production.kajabi-cdn.com/kajabi-storefronts-production/file-uploads/sites/2148860783/images/badec6-16-b45f-c2fb-634fe160010_community-dashboard-banner.gif';
-var CLUB_HREF = 'https://www.thestartupmom.com/community-join';
+var CLUB_HREF = 'https://www.thestartupmom.com/offers/GeFPUsgV?coupon_code=ENGINEOWNER37';
 
 function lessons(){
   return $$('.product-outline-post').map(function(a){

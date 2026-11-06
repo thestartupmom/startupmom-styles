@@ -1,132 +1,102 @@
 (function(){
-/* Instagram Edits Kit course dashboard. Runs only on the product dashboard
-   (or in the canvas preview where window.IEK_CANVAS is set). Restyles Kajabi's
-   standard dashboard: red hero, an install->connect->create tile strip built
-   from the course outline, a short letter, a help card, a first-visit reveal. */
+/* Instagram Edits Kit course dashboard (v2, Brand Kit vibe). Runs only on the
+   product dashboard (or in the canvas preview where window.IEK_CANVAS is set).
+   Hides Kajabi's native dashboard and injects one self-contained .ssk-shell
+   block: red hero + tilted bonus card, a do-this-first gate, A NOTE FROM ME
+   letter, a help card, and the engine-owner community promo. Only the member's
+   first name and the first lesson's href are read from the native DOM. */
 var DASH = /^\/products\/instagram-edits-kit\/?$/;
 if (!DASH.test(location.pathname) && !window.IEK_CANVAS) return;
-var root = document.documentElement;
-root.classList.add('iek-dash');
-var KEY = 'iek_welcomed_v1';
-var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
-var seen = '1';
-try { seen = localStorage.getItem(KEY); } catch (e) {}
-var reveal = !seen && !reduce;
-if (reveal) root.classList.add('iek-veil');
+document.documentElement.classList.add('ssk-dash');
 
 function ready(fn){ document.readyState !== 'loading' ? fn() : document.addEventListener('DOMContentLoaded', fn); }
 function $(s, c){ return (c || document).querySelector(s); }
 function $$(s, c){ return [].slice.call((c || document).querySelectorAll(s)); }
 function esc(s){ return String(s).replace(/[&<>"]/g, function(m){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]; }); }
 
-function lessons(){
-  return $$('.product-outline-post').map(function(a){
-    var m = (a.getAttribute('href') || '').match(/\/posts\/(\d+)/), ic = $('.progress-icon', a);
-    return {href: a.getAttribute('href') || '', post: m ? m[1] : '',
-            done: !!(ic && ic.classList.contains('progress-icon-100')),
-            title: (($('.media-body', a) || a).textContent || '').trim()};
-  }).filter(function(l){ return l.post; });
-}
 function firstName(){
   var t = $('.dashboard-welcome-title'); if (!t) return '';
-  var full = t.getAttribute('data-iek-name');
-  if (full == null){
-    var c = t.cloneNode(true); $$('span', c).forEach(function(s){ s.remove(); });
-    full = (c.textContent || '').trim(); t.setAttribute('data-iek-name', full);
-  }
+  var c = t.cloneNode(true); $$('span', c).forEach(function(s){ s.remove(); });
+  var full = (c.textContent || '').trim();
   return /@/.test(full) ? '' : (full.split(/\s+/)[0] || '');
 }
-
-/* three fixed tiles, matched to the outline by index */
-var TILES = [
-  {tag:'install', ic:'<path d="M12 3v12M8 11l4 4 4-4"/><path d="M5 19h14"/>'},
-  {tag:'connect', ic:'<rect x="3" y="8" width="8" height="8" rx="2"/><path d="M11 12h5a3 3 0 0 0 3-3V6"/><circle cx="19" cy="5" r="1.4"/>'},
-  {tag:'create',  ic:'<path d="M5 15a4 4 0 0 0 8 0V7a3 3 0 0 0-6 0"/><path d="M15 10l2-2 2 2-2 2zM17 8l-1-1"/>'}
-];
-
-function hero(){
-  var w = $('.dashboard-welcome'); if (!w) return;
-  var list = lessons(), started = list.some(function(l){ return l.done; });
-  var t = $('.dashboard-welcome-title', w), name = firstName();
-  if (t) t.innerHTML = (started ? 'Welcome back' : 'Welcome') + (name ? ', <em>' + esc(name) + '.</em>' : ' <em>in.</em>');
-  var sub = $('.dashboard-welcome-subtitle', w), btn = $('.dashboard-welcome-btn', w), mb = $('.media-body', w);
-  if (sub){
-    var nx = $('.ssk-next', sub);
-    if (!nx){ nx = document.createElement('span'); nx.className = 'ssk-next'; sub.appendChild(nx); }
-    var next = null;
-    list.forEach(function(l){ if (!next && !l.done) next = l; });
-    if (!next && list.length) next = list[list.length-1];
-    nx.innerHTML = next ? (started ? 'Next up: ' : 'Start with ') + '<b>' + esc(next.title) + '</b>' : '';
-    if (btn && next){ btn.setAttribute('href', next.href); btn.textContent = started ? 'Keep going' : 'Start lesson 1'; }
-  }
-  if (btn && mb && btn.parentNode !== mb) mb.appendChild(btn);
-  /* the computer-setup note */
-  if (mb && !$('.iek-desk', w)){
-    var d = document.createElement('div'); d.className = 'iek-desk';
-    d.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg>' +
-      '<span><b>Setup happens on your computer.</b> Edits is a desktop app, so open this on your laptop when you connect it.</span>';
-    mb.appendChild(d);
-  }
+function firstLessonHref(){
+  var a = $('.product-outline-post'); var h = a ? (a.getAttribute('href') || '') : '';
+  return h || '#ssk-start';
 }
 
-function strip(){
-  var w = $('.dashboard-welcome'); if (!w || $('.iek-steps')) return;
-  var list = lessons(); if (!list.length) return;
-  var wrap = document.createElement('nav'); wrap.className = 'iek-steps'; wrap.setAttribute('aria-label', 'The three steps');
-  list.slice(0,3).forEach(function(l, i){
-    var cfg = TILES[i] || TILES[2];
-    var a = document.createElement('a'); a.className = 'iek-tile'; a.href = l.href;
-    a.innerHTML =
-      '<div class="iek-tile__top"><span class="iek-tile__ic"><svg viewBox="0 0 24 24" aria-hidden="true">' + cfg.ic + '</svg></span>' +
-      '<span class="iek-tile__tag' + (l.done ? ' is-done' : '') + '">' + (l.done ? 'done' : cfg.tag) + '</span></div>' +
-      '<span class="iek-tile__name">' + esc(l.title) + '</span>' +
-      '<span class="iek-tile__go">' + (l.done ? 'Revisit' : (i === 0 ? 'Start here' : 'Open')) + '</span>';
-    wrap.appendChild(a);
-  });
-  w.parentNode.insertBefore(wrap, w.nextSibling);
+var ICON = 'https://cdn.jsdelivr.net/gh/thestartupmom/naptime-academy-assets@e56cb71da1af99daf2ab8197f141b70f058d0e9a/course-lesson/edits-kit/edits-icon.webp';
+var PORTRAIT = 'https://kajabi-storefronts-production.s3.amazonaws.com/file-uploads/sites/2148860783/images/dbb230-80-ce08-bf4c-b6dc04d4eda5_Hi_I_m_Meg_portrait_4_5.jpg';
+
+function markup(hello, l1){
+  return '' +
+  '<div class="ssk-hero">' +
+    '<div class="ssk-hero__media">' +
+      '<div class="ssk-hero__body">' +
+        '<h1 class="ssk-hero__title">' + hello + '</h1>' +
+        '<span class="ssk-hero__sub">Your free add on. The engine you already own can now cut your reels right inside the Edits desktop app, so you edit by talking, right where you post.</span>' +
+        '<a class="ssk-hero__btn" href="' + esc(l1) + '">Start lesson 1</a>' +
+      '</div>' +
+      '<aside class="ssk-idea">' +
+        '<div class="ssk-edits">' +
+          '<span class="ssk-edits__lbl" aria-hidden="true">it’s here</span>' +
+          '<svg class="ssk-edits__arrow" aria-hidden="true" viewBox="0 0 30 36"><path d="M15 3 C 11 13, 19 20, 15 30 M15 30 l-6 -7 M15 30 l6 -7"/></svg>' +
+          '<img class="ssk-edits__ic" src="' + ICON + '" alt="Edits app" width="88" height="88">' +
+        '</div>' +
+        '<span class="ssk-idea__t">Now works with the <em>Edits</em> desktop app.</span>' +
+        '<div class="ssk-idea__row"><span>Free with your engine</span></div>' +
+      '</aside>' +
+    '</div>' +
+  '</div>' +
+  '<div class="ssk-main">' +
+    '<div class="ssk-row">' +
+      '<div class="ssk-bodycol">' +
+        '<section class="ssk-gate" id="ssk-start">' +
+          '<span class="ssk-gate__mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v11"/><path d="M8 11l4 4 4-4"/><path d="M5 20h14"/></svg></span>' +
+          '<div class="ssk-gate__body">' +
+            '<p class="ssk-gate__ey">Before you connect</p>' +
+            '<h3 class="ssk-gate__h">Install your engine first.</h3>' +
+            '<p class="ssk-gate__p">Your engine does the work, so make sure it is installed and you have finished <b>module 1 of your setup</b> before you connect to Edits. Install the engine, then come back here and hook it up.</p>' +
+          '</div>' +
+        '</section>' +
+        '<div class="ssk-letter">' +
+          '<div class="ssk-letter__from"><img src="' + PORTRAIT + '" alt="" width="46" height="46"><span>A note from me</span></div>' +
+          '<h2>Your whole system, now inside <em>Edits.</em></h2>' +
+          '<p><b>I told you I’d give you every upgrade free, forever. I meant it.</b> This is one of them. The engine you already own can now hand your finished reel straight to the Edits desktop app, so you edit by talking, right where you post.</p>' +
+          '<p><b>Start with Start here.</b> It is the short version, about two minutes. Edits is not a new tool to learn. It is one more place your engine delivers to. Same system, same you, one new door.</p>' +
+          '<p>When your first reel comes out of Edits, tag it <b>#startupmomedit</b>. I want to see it.</p>' +
+          '<span class="ssk-letter__sig">Meg</span>' +
+        '</div>' +
+      '</div>' +
+      '<div class="ssk-rail">' +
+        '<div class="ssk-help">' +
+          '<span class="ssk-help__mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9.1 9a3 3 0 1 1 4.6 2.5c-.9.6-1.7 1.2-1.7 2.5"/><path d="M12 17h.01"/><circle cx="12" cy="12" r="9.5"/></svg></span>' +
+          '<div><h4>Stuck anywhere?</h4><p>Edits lives on your computer, so open this on your laptop when you connect it.</p><p>Email <a href="mailto:it@thestartupmom.com">it@thestartupmom.com</a> and a real person helps you get connected.</p></div>' +
+        '</div>' +
+        '<aside class="ssk-club">' +
+          '<span class="ssk-club__k">Engine owner price</span>' +
+          '<h3 class="ssk-club__h">Come see how I build it, <em>with Claude.</em></h3>' +
+          '<p class="ssk-club__p">Inside the community: a live call with me every month, my real workflow, and Naptime Academy.</p>' +
+          '<div class="ssk-club__price"><b>$37</b><span>a month, not $47</span></div>' +
+          '<a class="ssk-club__go" href="https://www.thestartupmom.com/offers/GeFPUsgV/checkout?coupon_code=COMMUNITY37">Join the community</a>' +
+        '</aside>' +
+      '</div>' +
+    '</div>' +
+  '</div>';
 }
 
-function letter(){
-  /* mark the first dashboard-text block as the calm letter */
-  var blocks = $$('.dashboard-text');
-  blocks.forEach(function(b){ b.classList.add('iek-bare'); });
+function build(){
+  if ($('.ssk-shell')) return;
+  var name = firstName();
+  var hello = name ? 'Welcome, <em>' + esc(name) + '.</em>' : 'Welcome <em>in.</em>';
+  var shell = document.createElement('div');
+  shell.className = 'ssk-shell';
+  shell.innerHTML = markup(hello, firstLessonHref());
+  var anchor = $('.banner-image') || $('#section-product_body') || document.body;
+  if (anchor === document.body) anchor.insertBefore(shell, anchor.firstChild);
+  else anchor.parentNode.insertBefore(shell, anchor);
 }
 
-function help(){
-  var rail = $('#section-product_sidebar'); if (!rail || $('.iek-help', rail)) return;
-  var card = document.createElement('div'); card.className = 'iek-help';
-  card.innerHTML = '<h4>Stuck anywhere?</h4><p>Email <a href="mailto:it@thestartupmom.com">it@thestartupmom.com</a> and a real person helps you get Edits connected.</p>';
-  rail.appendChild(card);
-}
-
-function align(){
-  var rail = $('#section-product_sidebar'), vid = $('#section-product_body .dashboard-video, #section-product_body .dashboard-img');
-  if (!rail || !vid) return;
-  rail.style.marginTop = '';
-  if (window.innerWidth < 768) return;
-  var d = vid.getBoundingClientRect().top - rail.getBoundingClientRect().top;
-  if (d > 0) rail.style.marginTop = Math.round(d) + 'px';
-}
-
-function playReveal(){
-  try { localStorage.setItem(KEY, '1'); } catch (e) {}
-  var o = document.createElement('div');
-  o.id = 'iek-reveal'; o.setAttribute('role', 'presentation');
-  o.innerHTML = '<h2 class="rv-title">Your Edits Kit is <em>ready.</em></h2>' +
-    '<p class="rv-sub">Let’s get you editing by voice.</p><button type="button" class="rv-skip">Skip</button>';
-  document.body.appendChild(o);
-  root.classList.remove('iek-veil');
-  var gone = false;
-  function finish(){ if (gone) return; gone = true; clearTimeout(t); if (o.parentNode) o.parentNode.removeChild(o); }
-  var t = setTimeout(finish, 3300);
-  $('.rv-skip', o).addEventListener('click', finish);
-}
-
-ready(function(){
-  hero(); strip(); letter(); help(); align();
-  window.addEventListener('resize', align);
-  window.addEventListener('load', align);
-  if (reveal) playReveal(); else root.classList.remove('iek-veil');
-});
-window.IEK = { update: function(){ hero(); strip(); align(); }, replay: function(){ try { localStorage.removeItem(KEY); } catch (e) {} playReveal(); } };
+ready(build);
+window.IEK = { rebuild: build };
 })();

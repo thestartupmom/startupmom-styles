@@ -1,92 +1,132 @@
-/* ===== Instagram Edits Kit — course dashboard skin =====
-   Injected via the product dashboard theme embedded_scripts. Keyed on Kajabi's
-   standard dashboard classes; activated by the .iek-dash root class the JS adds
-   only on /products/instagram-edits-kit. Lean, value-forward: red hero, a
-   three-tile install -> connect -> create strip, a short letter, a help card.
-   Fonts load from the site theme (Instrument Serif / Clash Display / Cousine /
-   Inter); Ugly Dave via the hosted woff2 face below. */
-@font-face{font-family:'Ugly Dave';font-style:normal;font-weight:400;font-display:swap;src:url('https://cdn.jsdelivr.net/gh/thestartupmom/startupmom-styles@a6e5d3a8fe931033ca1edfea1cd3e2103a739224/fonts/ugly-dave-regular.otf') format('opentype');}
+/* ===== Instagram Edits Kit — course dashboard skin (v2, Brand Kit vibe) =====
+   Injected via the product dashboard theme embedded_scripts. The JS adds
+   .ssk-dash to <html> only on /products/instagram-edits-kit (or in the canvas
+   preview where window.IEK_CANVAS is set), then hides Kajabi's native dashboard
+   and injects one self-contained .ssk-shell block (hero + gate + letter + help
+   + community). Only the first name and lesson-1 href are read from the native
+   DOM, so there is no dependency on Kajabi's own markup beyond those two reads.
+   Fonts: Instrument Serif / Inter / Cousine / Clash load here so the skin is
+   self-sufficient; Ugly Dave is the handwritten face. */
+@import url('https://startupmom-reels-assets.netlify.app/ugly-dave.css');
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cousine:ital,wght@0,400;0,700&display=swap');
+@import url('https://api.fontshare.com/v2/css?f[]=clash-display@500&display=swap');
 
-.iek-dash{
-  --red:#bd1b1b; --sage:#395848; --brass:#9c7c4d;
-  --cream:#f8f6ee; --wheat:#eee3ba; --ink:#1e1e1e; --walnut:#4d3b2d;
-  --hairline:#1e1e1e; --muted:rgba(30,30,30,.66);
-  --serif:'Instrument Serif',Georgia,serif;
-  --display:'Clash Display','Inter',sans-serif;
-  --sans:'Inter',system-ui,sans-serif;
-  --mono:'Cousine',monospace;
-  --hand:'Ugly Dave','Gochi Hand',cursive;
-  --ease:cubic-bezier(.22,.61,.36,1);
+/* ---- hide Kajabi's native dashboard, show the Edits Kit shell ----
+   Keyed on .ssk-dash (added to <html> synchronously), so native content never
+   flashes before the shell mounts. display:none still allows JS to read name +
+   lesson href out of #section-product_body. */
+html.ssk-dash .banner-image,
+html.ssk-dash #section-product_body,
+html.ssk-dash #section-product_sidebar{display:none!important;}
+
+/* ---- tokens live on the injected shell ---- */
+.ssk-shell{
+  --s-red:#bd1b1b;--s-red-deep:#a01717;--s-cream:#f8f6ee;--s-wheat:#eee3ba;
+  --s-ink:#1e1e1e;--s-walnut:#4d3b2d;--s-muted:rgba(30,30,30,.66);
+  --s-line:rgba(30,30,30,.14);
+  --s-serif:'Instrument Serif',Georgia,serif;--s-sans:'Inter',system-ui,sans-serif;
+  --s-mono:'Cousine',ui-monospace,monospace;--s-hand:'Ugly Dave','Gochi Hand',cursive;
+  --s-ease:cubic-bezier(.16,1,.3,1);--s-lift:0 26px 54px -24px rgba(30,30,30,.34);
+  background:var(--s-cream);color:var(--s-ink);
 }
+.ssk-shell *{box-sizing:border-box;}
 
-/* ---- reveal curtain (first visit only) ---- */
-html.iek-veil #section-product_body{opacity:0;}
-#iek-reveal{position:fixed;inset:0;z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;background:var(--red);color:#fff;text-align:center;padding:24px;animation:iekFade .5s var(--ease) 2.7s forwards;}
-#iek-reveal .rv-title{font-family:var(--serif);font-size:clamp(40px,8vw,72px);line-height:1;margin:0;color:#fff!important;}
-#iek-reveal .rv-title em{font-style:italic;color:var(--wheat);}
-#iek-reveal .rv-sub{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;margin:6px 0 0;color:rgba(255,255,255,.86);}
-#iek-reveal .rv-skip{position:absolute;bottom:26px;background:none;border:1px solid rgba(255,255,255,.5);color:#fff;border-radius:100px;padding:8px 18px;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;}
-@keyframes iekFade{to{opacity:0;visibility:hidden;}}
+/* ---- full-bleed red hero ---- */
+.ssk-shell .ssk-hero{background:var(--s-red);border-bottom:1px solid var(--s-ink);padding:64px 56px 60px;color:var(--s-cream);overflow:hidden;}
+.ssk-shell .ssk-hero__media{display:flex;align-items:center;gap:28px 56px;max-width:1180px;margin:0 auto;}
+.ssk-shell .ssk-hero__body{flex:1 1 auto;min-width:0;}
+.ssk-shell .ssk-hero__title{font-family:var(--s-serif);font-weight:400;font-size:clamp(44px,5.2vw,78px);line-height:1;letter-spacing:-.025em;color:var(--s-cream);margin:0;}
+.ssk-shell .ssk-hero__title em{font-style:italic;color:var(--s-wheat);}
+.ssk-shell .ssk-hero__sub{display:block;margin:18px 0 30px;font-family:var(--s-sans);font-size:16px;line-height:1.6;color:rgba(248,246,238,.86);max-width:44ch;}
+.ssk-shell .ssk-hero__sub b{font-weight:600;color:var(--s-cream);}
+.ssk-shell .ssk-hero__btn{display:inline-flex;align-items:center;gap:12px;background:var(--s-cream);color:var(--s-ink);border:1px solid var(--s-ink);border-radius:100px;font-family:var(--s-mono);font-weight:700;font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;padding:17px 28px;text-decoration:none;white-space:nowrap;transition:transform .3s var(--s-ease),background .25s;}
+.ssk-shell .ssk-hero__btn::after{content:'\2192';font-family:var(--s-sans);font-size:15px;transition:transform .3s var(--s-ease);}
+.ssk-shell .ssk-hero__btn:hover{background:#fff;transform:translateY(-1px);}
+.ssk-shell .ssk-hero__btn:hover::after{transform:translateX(3px);}
 
-/* ---- banner -> solid red ---- */
-.iek-dash .banner-image{background:var(--red)!important;}
-.iek-dash .banner-image img{opacity:0;}
+/* ---- tilted bonus card (slimmed kit cover) ---- */
+.ssk-shell .ssk-idea{flex:none;width:320px;margin:0;background:#fff;border:1px solid var(--s-ink);border-radius:4px;padding:22px 24px 18px;color:var(--s-ink);transform:rotate(2deg);box-shadow:0 30px 60px -18px rgba(0,0,0,.42);transition:transform .6s var(--s-ease);}
+.ssk-shell .ssk-idea:hover{transform:rotate(.5deg) translateY(-3px);}
+.ssk-shell .ssk-edits{display:flex;flex-direction:column;align-items:center;gap:0;margin:18px 0 20px;}
+.ssk-shell .ssk-edits__lbl{font-family:var(--s-hand);font-size:27px;line-height:1;color:var(--s-red);transform:rotate(-3deg);}
+.ssk-shell .ssk-edits__arrow{width:30px;height:34px;overflow:visible;margin:3px 0 7px;}
+.ssk-shell .ssk-edits__arrow path{fill:none;stroke:var(--s-red);stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;}
+.ssk-shell .ssk-edits__ic{width:88px;height:88px;border-radius:19px;border:1px solid var(--s-ink);transform:rotate(-4deg);box-shadow:0 14px 26px -12px rgba(0,0,0,.45);}
+.ssk-shell .ssk-idea__t{display:block;font-family:var(--s-serif);font-size:27px;line-height:1.08;letter-spacing:-.015em;color:var(--s-ink);text-align:center;text-wrap:balance;}
+.ssk-shell .ssk-idea__t em{font-style:italic;color:var(--s-red);}
+.ssk-shell .ssk-idea__row{display:flex;align-items:center;justify-content:center;gap:12px;margin-top:16px;padding-top:13px;border-top:1px solid var(--s-line);}
+.ssk-shell .ssk-idea__row span{font-family:var(--s-mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--s-muted);}
 
-/* ---- welcome band (red) ---- */
-.iek-dash .dashboard-welcome{background:var(--red);color:#fff;border-radius:18px;padding:clamp(28px,5vw,52px) clamp(24px,5vw,56px);overflow:hidden;}
-.iek-dash .dashboard-welcome .media{display:flex;flex-wrap:wrap;align-items:center;gap:22px;}
-.iek-dash .dashboard-welcome .media-body{flex:1 1 300px;min-width:0;}
-.iek-dash .dashboard-welcome-title{font-family:var(--serif);font-weight:400;font-size:clamp(34px,5.4vw,56px);line-height:1.02;color:#fff;margin:0;}
-.iek-dash .dashboard-welcome-title em{font-style:italic;color:var(--wheat);}
-.iek-dash .dashboard-welcome-subtitle{font-family:var(--sans);font-size:16px;line-height:1.55;color:rgba(255,255,255,.9);margin:12px 0 0;max-width:46ch;}
-.iek-dash .ssk-next{display:block;margin-top:10px;font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--wheat);}
-.iek-dash .ssk-next b{font-weight:400;color:#fff;}
-/* cream outlined button = the door */
-.iek-dash .dashboard-welcome-btn{display:inline-flex;align-items:center;gap:8px;margin-top:20px;background:var(--cream);color:var(--ink);border:1px solid var(--ink);border-radius:100px;padding:13px 24px;font-family:var(--mono);font-size:13px;letter-spacing:.08em;text-transform:uppercase;text-decoration:none;transition:transform .2s var(--ease);}
-.iek-dash .dashboard-welcome-btn::after{content:"\2192";}
-.iek-dash .dashboard-welcome-btn:hover{transform:translateX(3px);}
+/* ---- body layout ---- */
+.ssk-shell .ssk-main{max-width:1180px;margin:0 auto;padding:48px 56px 96px;}
+.ssk-shell .ssk-row{display:flex;gap:56px;align-items:flex-start;}
+.ssk-shell .ssk-bodycol{flex:1 1 auto;min-width:0;}
+.ssk-shell .ssk-rail{flex:0 0 300px;}
 
-/* ---- desk note: setup happens on a computer ---- */
-.iek-dash .iek-desk{display:flex;gap:10px;align-items:flex-start;margin:18px 0 0;padding:14px 16px;background:var(--wheat);border:1px solid var(--ink);border-radius:12px;font-family:var(--sans);font-size:14.5px;line-height:1.5;color:var(--ink);}
-.iek-dash .iek-desk b{font-weight:600;}
-.iek-dash .iek-desk svg{flex:none;width:20px;height:20px;margin-top:1px;stroke:var(--red);stroke-width:1.8;fill:none;}
+/* ---- do-this-first gate card (above the note) ---- */
+.ssk-shell .ssk-gate{display:flex;gap:20px;align-items:flex-start;background:var(--s-wheat);border:1px solid var(--s-ink);border-radius:4px;padding:26px 30px;box-shadow:var(--s-lift);margin:0 0 30px;}
+.ssk-shell .ssk-gate__mark{flex:none;width:46px;height:46px;border-radius:50%;background:var(--s-red);border:1px solid var(--s-ink);display:grid;place-items:center;color:var(--s-cream);box-shadow:0 10px 20px -10px rgba(0,0,0,.5);}
+.ssk-shell .ssk-gate__mark svg{width:21px;height:21px;}
+.ssk-shell .ssk-gate__ey{font-family:var(--s-mono);font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--s-walnut);margin:3px 0 8px;}
+.ssk-shell .ssk-gate__h{font-family:var(--s-serif);font-weight:400;font-size:clamp(27px,2.5vw,34px);line-height:1.02;letter-spacing:-.015em;color:var(--s-ink);margin:0 0 10px;}
+.ssk-shell .ssk-gate__p{font-family:var(--s-sans);font-size:15.5px;line-height:1.62;color:var(--s-walnut);margin:0;max-width:54ch;}
+.ssk-shell .ssk-gate__p b{color:var(--s-ink);font-weight:600;}
 
-/* ---- the three-tile strip: install -> connect -> create ---- */
-.iek-dash .iek-steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:26px 0 8px;padding:0 clamp(24px,5vw,56px);box-sizing:border-box;width:100%;max-width:100%;}
-.iek-dash .iek-tile{display:flex;flex-direction:column;gap:10px;text-decoration:none;color:var(--ink);background:#fff;border:1px solid var(--ink);border-radius:16px;padding:20px 18px 18px;min-height:150px;transition:transform .2s var(--ease),box-shadow .2s var(--ease);}
-.iek-dash .iek-tile:hover{transform:translateY(-3px);box-shadow:0 14px 30px -18px rgba(30,30,30,.5);}
-.iek-dash .iek-tile__top{display:flex;align-items:center;justify-content:space-between;}
-.iek-dash .iek-tile__ic{width:38px;height:38px;border-radius:10px;background:var(--cream);border:1px solid var(--ink);display:flex;align-items:center;justify-content:center;}
-.iek-dash .iek-tile__ic svg{width:20px;height:20px;stroke:var(--red);stroke-width:1.7;fill:none;}
-.iek-dash .iek-tile__tag{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);}
-.iek-dash .iek-tile__tag.is-done{color:var(--sage);}
-.iek-dash .iek-tile__name{font-family:var(--serif);font-size:23px;line-height:1.08;margin-top:auto;}
-.iek-dash .iek-tile__go{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--red);}
-.iek-dash .iek-tile__go::after{content:" \2192";}
+/* ---- A NOTE FROM ME letter ---- */
+.ssk-shell .ssk-letter{position:relative;background:#fff;border:1px solid var(--s-ink);border-radius:4px;padding:48px 52px 44px;box-shadow:var(--s-lift);}
+.ssk-shell .ssk-letter__from{display:flex;align-items:center;gap:14px;margin:0 0 26px;padding-bottom:22px;border-bottom:1px solid var(--s-line);}
+.ssk-shell .ssk-letter__from img{width:46px;height:46px;border-radius:50%;object-fit:cover;object-position:50% 22%;border:1px solid var(--s-ink);}
+.ssk-shell .ssk-letter__from span{font-family:var(--s-mono);font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--s-walnut);}
+.ssk-shell .ssk-letter h2{font-family:var(--s-serif);font-weight:400;font-size:clamp(34px,3.3vw,48px);line-height:1.04;letter-spacing:-.02em;color:var(--s-ink);margin:0 0 22px;max-width:20ch;text-wrap:balance;}
+.ssk-shell .ssk-letter h2 em{font-style:italic;color:var(--s-red);}
+.ssk-shell .ssk-letter p{font-family:var(--s-sans);font-size:17px;line-height:1.7;color:var(--s-muted);margin:0 0 16px;max-width:38em;}
+.ssk-shell .ssk-letter p b{color:var(--s-ink);font-weight:600;}
+.ssk-shell .ssk-letter__sig{display:block;font-family:var(--s-hand);font-size:44px;line-height:1;color:var(--s-red);margin:22px 0 0;transform:rotate(-4deg);transform-origin:left center;width:fit-content;}
 
-/* ---- letter: short, calm ---- */
-.iek-dash .iek-bare{background:var(--cream);border:1px solid #e7e3d9;border-radius:16px;padding:clamp(22px,4vw,30px);margin-top:22px;}
-.iek-dash .iek-bare p{font-family:var(--sans);font-size:16.5px;line-height:1.65;color:var(--ink);margin:0 0 12px;}
-.iek-dash .iek-bare p:last-child{margin-bottom:0;}
-.iek-dash .iek-bare .sig{font-family:var(--hand);color:var(--red);font-size:26px;line-height:1;margin-top:6px;}
+/* ---- help card (sidebar) ---- */
+.ssk-shell .ssk-help{display:flex;gap:16px;align-items:flex-start;padding:20px 20px 18px;background:var(--s-wheat);border:1px solid var(--s-ink);border-radius:4px;box-shadow:var(--s-lift);}
+.ssk-shell .ssk-help__mark{flex:none;width:34px;height:34px;border-radius:50%;background:#fff;border:1px solid var(--s-ink);display:grid;place-items:center;color:var(--s-red);}
+.ssk-shell .ssk-help__mark svg{width:15px;height:15px;}
+.ssk-shell .ssk-help h4{font-family:var(--s-mono);font-weight:700;font-size:12px;letter-spacing:.12em;text-transform:uppercase;margin:0 0 6px;color:var(--s-ink);}
+.ssk-shell .ssk-help p{font-family:var(--s-sans);font-size:14px;line-height:1.55;color:var(--s-walnut);margin:0 0 10px;}
+.ssk-shell .ssk-help p:last-child{margin:0;}
+.ssk-shell .ssk-help p b{color:var(--s-ink);font-weight:600;}
+.ssk-shell .ssk-help a{color:var(--s-red);font-weight:600;text-decoration:underline;text-underline-offset:3px;}
 
-/* ---- sidebar help card ---- */
-.iek-dash .iek-help{background:var(--wheat);border:1px solid var(--ink);border-radius:14px;padding:18px 20px;}
-.iek-dash .iek-help h4{font-family:var(--display);font-weight:600;font-size:13px;letter-spacing:.1em;text-transform:uppercase;margin:0 0 6px;color:var(--ink);}
-.iek-dash .iek-help p{font-family:var(--sans);font-size:14.5px;line-height:1.55;color:var(--ink);margin:0;}
-.iek-dash .iek-help a{color:var(--red);font-weight:600;text-decoration:none;}
+/* ---- community promo (engine-owner $37) ---- */
+.ssk-shell .ssk-club{margin-top:22px;background:#fff;border:1px solid var(--s-ink);border-radius:4px;padding:24px 24px 26px;box-shadow:var(--s-lift);}
+.ssk-shell .ssk-club__k{display:block;font-family:var(--s-mono);font-weight:700;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--s-red);margin:0 0 10px;}
+.ssk-shell .ssk-club__h{font-family:var(--s-serif);font-weight:400;font-size:27px;line-height:1.08;letter-spacing:-.015em;color:var(--s-ink);margin:0 0 10px;text-wrap:balance;}
+.ssk-shell .ssk-club__h em{font-style:italic;color:var(--s-red);}
+.ssk-shell .ssk-club__p{font-family:var(--s-sans);font-size:14px;line-height:1.56;color:var(--s-walnut);margin:0 0 16px;}
+.ssk-shell .ssk-club__price{display:flex;align-items:baseline;gap:8px;margin:0 0 16px;}
+.ssk-shell .ssk-club__price b{font-family:var(--s-serif);font-weight:400;font-size:36px;line-height:1;color:var(--s-ink);}
+.ssk-shell .ssk-club__price span{font-family:var(--s-mono);font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--s-muted);}
+.ssk-shell .ssk-club__go{display:flex;align-items:center;justify-content:center;gap:10px;background:var(--s-red);color:var(--s-cream);border:1px solid var(--s-ink);border-radius:100px;font-family:var(--s-mono);font-weight:700;font-size:12px;letter-spacing:.1em;text-transform:uppercase;padding:14px 18px;text-decoration:none;transition:transform .25s var(--s-ease),background .2s;}
+.ssk-shell .ssk-club__go::after{content:'\2192';font-family:var(--s-sans);font-size:14px;transition:transform .25s var(--s-ease);}
+.ssk-shell .ssk-club__go:hover{background:var(--s-red-deep);transform:translateY(-1px);}
+.ssk-shell .ssk-club__go:hover::after{transform:translateX(3px);}
 
-/* ---- framed consumption images (lesson cards further down) ---- */
-.iek-dash #section-product_body .dashboard-img,
-.iek-dash .dashboard-video{border:1px solid var(--ink);border-radius:16px;overflow:hidden;box-shadow:0 18px 40px -26px rgba(30,30,30,.5);}
-
-/* ---- hide leftover PYP/placeholder chrome ---- */
-.iek-dash .iek-bare.hidden-letter{display:none;}
-
-@media(max-width:767px){
-  .iek-dash .iek-steps{grid-template-columns:1fr;}
-  .iek-dash .iek-tile{min-height:0;flex-direction:row;align-items:center;gap:14px;padding:16px;}
-  .iek-dash .iek-tile__top{flex:none;}
-  .iek-dash .iek-tile__name{margin-top:0;font-size:20px;}
-  .iek-dash .iek-tile__go{display:none;}
+@media (max-width:991px){
+  .ssk-shell .ssk-hero{padding:52px 36px 48px;}
+  .ssk-shell .ssk-idea{width:290px;}
+  .ssk-shell .ssk-main{padding:40px 28px 80px;}
+  .ssk-shell .ssk-row{gap:40px;}
+  .ssk-shell .ssk-letter{padding:38px 34px 34px;}
+}
+@media (max-width:767px){
+  .ssk-shell .ssk-hero{padding:34px 22px 36px;}
+  .ssk-shell .ssk-hero__media{flex-direction:column;align-items:stretch;gap:30px;}
+  .ssk-shell .ssk-idea{width:auto;transform:rotate(-1deg);}
+  .ssk-shell .ssk-hero__title{font-size:clamp(42px,12vw,54px);}
+  .ssk-shell .ssk-hero__btn{justify-content:center;width:100%;}
+  .ssk-shell .ssk-main{padding:26px 18px 56px;}
+  .ssk-shell .ssk-row{flex-direction:column;gap:40px;}
+  .ssk-shell .ssk-rail{flex:1 1 auto;width:100%;}
+  .ssk-shell .ssk-gate{padding:22px 20px;gap:16px;}
+  .ssk-shell .ssk-letter{padding:30px 22px 26px;}
+  .ssk-shell .ssk-letter h2{font-size:clamp(32px,9vw,40px);}
+  .ssk-shell .ssk-letter p{font-size:16px;}
 }

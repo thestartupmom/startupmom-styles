@@ -4,7 +4,7 @@
 .refeat{--red:#bd1b1b;--ink:#1e1e1e;--walnut:#4d3b2d;--muted:rgba(30,30,30,.66);--cream:#f8f6ee;--wheat:#eee3ba;--brass:#9c7c4d;--line:#e7e3d9;--sage:#395848;--serif:'Instrument Serif',Georgia,serif;--display:'Clash Display',sans-serif;--sans:'Inter',-apple-system,sans-serif;--mono:'Cousine',monospace;--hand:'Ugly Dave','Gochi Hand',cursive;font-family:var(--sans);color:var(--ink);-webkit-font-smoothing:antialiased}
 
 /* Section 1: choose your editor */
-.refeat .feat{background:var(--cream);padding:108px 0 44px}
+.refeat .feat{background:#fff;padding:108px 0 44px;border-top:1px solid var(--line)}
 .refeat .feat__in{max-width:1080px;margin:0 auto;padding:0 32px}
 .refeat .feat__head{max-width:42rem;margin:0 auto;text-align:center}
 .refeat .feat .eyebrow{font-family:var(--display);font-weight:700;font-size:13.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--red);display:block;margin-bottom:16px}
@@ -26,8 +26,8 @@
 @media(prefers-reduced-motion:reduce){.refeat .ec,.refeat .ec__icon{transition:none}.refeat .ec:hover{transform:none}.refeat .ec:hover .ec__icon{transform:none}}
 
 /* Section 2: long-form YouTube banner */
-.refeat .beta{background:var(--cream);padding:0 0 64px}
-.refeat .beta__in{max-width:1000px;margin:0 auto;padding:0 32px}
+.refeat .beta{background:#fff;padding:0 0 64px}
+.refeat .beta__in{max-width:1080px;margin:0 auto;padding:0 32px}
 .refeat .ybanner{display:flex;align-items:center;gap:20px;background:var(--wheat);border:1px solid #e3d6a6;border-radius:14px;box-shadow:0 12px 30px rgba(77,59,45,.1);padding:12px 22px}
 .refeat .ybanner__logo{flex:none;display:flex;align-items:center;gap:10px}
 .refeat .ybanner__pl{width:40px;height:28px;border-radius:7px;background:var(--red);display:flex;align-items:center;justify-content:center;box-shadow:0 6px 14px rgba(189,27,27,.24)}

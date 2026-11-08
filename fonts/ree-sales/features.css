@@ -4,7 +4,7 @@
 .refeat{--red:#bd1b1b;--ink:#1e1e1e;--walnut:#4d3b2d;--muted:rgba(30,30,30,.66);--cream:#f8f6ee;--wheat:#eee3ba;--brass:#9c7c4d;--line:#e7e3d9;--sage:#395848;--serif:'Instrument Serif',Georgia,serif;--display:'Clash Display',sans-serif;--sans:'Inter',-apple-system,sans-serif;--mono:'Cousine',monospace;--hand:'Ugly Dave','Gochi Hand',cursive;font-family:var(--sans);color:var(--ink);-webkit-font-smoothing:antialiased}
 
 /* Section 1: choose your editor */
-.refeat .feat{background:#fff;padding:108px 0 44px;border-top:1px solid var(--line)}
+.refeat .feat{background:#fff;padding:108px 0 44px;border-top:1px solid rgba(30,30,30,.1)}
 .refeat .feat__in{max-width:1080px;margin:0 auto;padding:0 32px}
 .refeat .feat__head{max-width:42rem;margin:0 auto;text-align:center}
 .refeat .feat .eyebrow{font-family:var(--display);font-weight:700;font-size:13.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--red);display:block;margin-bottom:16px}
